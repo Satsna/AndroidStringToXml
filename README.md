@@ -1,0 +1,2 @@
+# AndroidStringToXml
+将安卓中布局文件的引用字符串及类文件中引用的支付串归纳至Strings.xml文件中
