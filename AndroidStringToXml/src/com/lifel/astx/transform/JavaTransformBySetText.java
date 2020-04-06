@@ -1,4 +1,4 @@
-package com.lifel.astx.Transform;
+package com.lifel.astx.transform;
 
 import com.lifel.astx.util.FileUtils;
 import com.lifel.astx.util.ListUtils;

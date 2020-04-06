@@ -1,4 +1,4 @@
-package com.lifel.astx.Transform;
+package com.lifel.astx.transform;
 
 import com.lifel.astx.util.FileUtils;
 import com.lifel.astx.util.ListUtils;
@@ -25,8 +25,7 @@ public class LayoutTransform {
     private String layoutDirPath;
 
     /**
-     *
-     * @param originalDirPath 原始布局文件夹路径
+     * @param originalDirPath  原始布局文件夹路径
      * @param transformDirPath 转换后的文件存放路径
      */
     public LayoutTransform(String originalDirPath, String transformDirPath) {
@@ -96,6 +95,9 @@ public class LayoutTransform {
 
         String filter1 = "android:text=";
         String filter2 = "android:hint=";
+        String filter3 = "app:centerText=";
+        String filter4 = "app:rightText=";
+
         try {
             //读取流
             InputStreamReader inputReader = new InputStreamReader(new FileInputStream(originalFilePath));
@@ -111,7 +113,7 @@ public class LayoutTransform {
             String lineContent;
             while ((lineContent = bf.readLine()) != null) {
                 //该行不包含替换内容,写入原始内容
-                if (!lineContent.contains(filter1) && !lineContent.contains(filter2)) {
+                if (!lineContent.contains(filter1) && !lineContent.contains(filter2) && !lineContent.contains(filter3) && !lineContent.contains(filter4)) {
                     layoutBw.write(lineContent + "\r\n");
                     continue;
                 }
@@ -120,8 +122,15 @@ public class LayoutTransform {
                     layoutBw.write(lineContent + "\r\n");
                     continue;
                 }
+                //是否包含汉子
+                if (!StringUtils.isContainChinese(lineContent)) {
+                    layoutBw.write(lineContent + "\r\n");
+                    continue;
+                }
                 if (lineContent.contains(filter1)) transfer(originalFileName, filter1, valuesBw, layoutBw, lineContent);
                 if (lineContent.contains(filter2)) transfer(originalFileName, filter2, valuesBw, layoutBw, lineContent);
+                if (lineContent.contains(filter3)) transfer(originalFileName, filter3, valuesBw, layoutBw, lineContent);
+                if (lineContent.contains(filter4)) transfer(originalFileName, filter4, valuesBw, layoutBw, lineContent);
             }
             bf.close();
             inputReader.close();
