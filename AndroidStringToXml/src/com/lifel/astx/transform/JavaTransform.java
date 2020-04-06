@@ -148,9 +148,6 @@ public class JavaTransform {
      * @throws IOException
      */
     private boolean isContinue(String filter1, BufferedWriter javaBw, String lineContent) throws IOException {
-        if(lineContent.contains("Bundle bundle")){
-            LogUtils.log("aa");
-        }
         //该行不包含替换内容,写入原始内容
         if (!lineContent.contains(filter1)) {
             javaBw.write(lineContent + "\r\n");
